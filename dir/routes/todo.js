@@ -9,7 +9,6 @@ router.get("/", (req, res, next) => {
     res.send(todos);
 });
 router.post("/", (req, res, next) => {
-    console.log(req.body);
     const { text } = req.body;
     const todo = { id: new Date().toISOString(), text };
     todos.push(todo);
@@ -21,9 +20,9 @@ router.put("/:id", (req, res, next) => {
     const idx = todos.findIndex(e => e.id == id);
     if (idx >= 0) {
         todos[idx] = { id: todos[idx].id, text: text };
-        res.send("updated");
+        return res.send("updated");
     }
-    res.status(401).send("invalid id");
+    res.status(404).send("invalid id");
 });
 router.delete("/:id", (req, res, next) => {
     const { text } = req.body;
